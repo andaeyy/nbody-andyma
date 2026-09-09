@@ -1,25 +1,22 @@
 public class Planet {
-    double myxpos;
-    double myypos;
-    double myxvel;
-    double myyvel;
-    double mymass;
-    String myfilename;
+    double myXPos;
+    double myYPos;
+    double myXVel;
+    double myYVel;
+    double myMass;
+    String myFileName;
     public Planet(double xp, double yp, double xv, double yv, double mass, String filename){
-        this.myxpos = xp;
-        this.myypos = yp;
-        this.myxvel = xv;
-        this.myyvel = yv;
-        this.mymass = mass;
-        this.myfilename = filename;
+        this.myXPos = xp;
+        this.myYPos = yp;
+        this.myXVel = xv;
+        this.myYVel = yv;
+        this.myMass = mass;
+        this.myFileName = filename;
     }
     public Planet(Planet p){
-            myxpos = p.myxpos;
-            myypos = p.myypos;
-            myxvel = p.myxvel;
-            myyvel = p.myyvel;
-            mymass = p.mymass;
-            myfilename = p.myfilename;
+        new Planet(p.myXPos,p.myYPos,p.myXVel,p.myYVel,p.myMass,p.myFileName);
     }
+
+
 
 }
