@@ -57,6 +57,10 @@ public class Planet {
         return ans;
     }
     public void update(double seconds, double xforce, double yforce){
+        myXVel += (xforce/myMass)*seconds;
+        myYVel += (yforce/myMass)*seconds;
+        myXPos += myXVel*seconds;
+        myYPos += myYVel*seconds;
 
     }
 
