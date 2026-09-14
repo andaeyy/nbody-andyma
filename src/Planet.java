@@ -47,7 +47,7 @@ public class Planet {
         for (Planet p: planets){
             if (!p.equals(this)) ans += calcForceExertedByX(p);
         }
-        return Math.round(ans*10.0)/10.0;
+        return ans;
     }
     public double calcNetForceExertedByY(Planet[] planets){
         double ans = 0;
