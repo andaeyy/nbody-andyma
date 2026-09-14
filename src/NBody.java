@@ -6,6 +6,7 @@ public class NBody {
     public static double readRadius(String fname) {
         try {
             Scanner scan = new Scanner(new File(fname));
+            scan.nextInt();
             double radius = scan.nextDouble();
             scan.close();
             return radius;   // must return a double here
@@ -20,12 +21,20 @@ public class NBody {
             Scanner scan = new Scanner(new File(fname));
             int length = scan.nextInt();
             Planet[] ans = new Planet[length];
-            int counter = 0;
-            while (scan.hasNext()){
-
+            scan.nextDouble();
+            for (int i = 0; i < length; i++){
+                double xpos = scan.nextDouble();
+                double ypos = scan.nextDouble();
+                double xvel = scan.nextDouble();
+                double yvel = scan.nextDouble();
+                double mass = scan.nextDouble();
+                String filename;
+                filename = scan.next();
+                Planet p = new Planet(xpos,ypos,xvel,yvel,mass,filename);
+                ans[i] = p;
             }
             scan.close();
-            return ans;   // must return a double here
+            return ans;
         } catch (FileNotFoundException e) {
             Planet[] ans = {};
             System.out.println("Error!");
@@ -36,23 +45,22 @@ public class NBody {
     public static void main(String[] args) {
         double totalTime = 157788000.0;
         double dt = 25000.0;
-        String pfile = "data/planets.txt";
+        String pfile = "data/spiral.txt";
         if (args.length > 2) {
             totalTime = Double.parseDouble(args[0]);
             dt = Double.parseDouble(args[1]);
             pfile = args[2];
         }
 
-        String fname = "./data/planets.txt";
 
-		/* uncomment after you create Planet class
+        String fname = "./data/spiral.txt";
 
-		Planet[] planets = null; // readPlanets(fname);
-        */
 
-        double radius = 0.0; // readRadius(fname);
+		Planet[] planets = readPlanets(fname); // readPlanets(fname);
 
-		/* uncomment after you create Planet class
+
+        double radius = readRadius(fname); // readRadius(fname);
+
 
 		System.out.printf("%d\n", planets.length);
 		System.out.printf("%.2e\n", radius);
@@ -63,12 +71,30 @@ public class NBody {
 		                      planets[i].myMass, planets[i].myFileName);
 		}
 
-		*/
+
         StdDraw.setScale(-radius, radius);
-        StdDraw.picture(0, 0, "images/starfield.jpg");
+        StdDraw.picture(0,0,"images/starfield.jpg");
+        for (int i = 0; i < planets.length; i++){
+            planets[i].draw();
+        }
 
         for (double t = 0.0; t < totalTime; t += dt) {
+            double[] xForces = new double[planets.length];
+            double[] yForces = new double[planets.length];
 
+            for (int i = 0; i < planets.length; i++){
+                xForces[i] = planets[i].calcNetForceExertedByX(planets);
+                yForces[i] = planets[i].calcNetForceExertedByY(planets);
+            }
+            for (int i = 0; i < planets.length; i++){
+                planets[i].update(dt,xForces[i],yForces[i]);
+            }
+            StdDraw.setScale(-radius, radius);
+            StdDraw.picture(0,0,"images/starfield.jpg");
+            for (int i = 0; i < planets.length; i++){
+                planets[i].draw();
+            }
+            StdDraw.show(10);
         }
     }
 }
