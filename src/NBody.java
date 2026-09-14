@@ -94,7 +94,15 @@ public class NBody {
             for (int i = 0; i < planets.length; i++){
                 planets[i].draw();
             }
-            StdDraw.show(10);
+            StdDraw.show(1);
+        }
+        System.out.printf("%d\n", planets.length);
+        System.out.printf("%.2e\n", radius);
+        for (int i = 0; i < planets.length; i++) {
+            System.out.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+                    planets[i].myXPos, planets[i].myYPos,
+                    planets[i].myXVel, planets[i].myYVel,
+                    planets[i].myMass, planets[i].myFileName);
         }
     }
 }
